@@ -1,6 +1,5 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { WebSocketDataService } from './services/web-socket-data.service';
-import { distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -23,6 +22,7 @@ export class AppComponent implements OnInit {
   ) { };
 
   ngOnInit() {
+    // fetching data from websocket
     this.webSocketDataService.stockData.asObservable().subscribe((response) => {
       if (response) {
         this.prevData = this.currentData;
@@ -40,6 +40,7 @@ export class AppComponent implements OnInit {
     this.convert(this.mapOne);
   }
 
+  // remove duplicate data
   public removeDuplicates(arr): any {
     for (let i = 0; i < arr.length; i++) {
       this.map.set(arr[i][0], arr[i][1])
@@ -47,6 +48,7 @@ export class AppComponent implements OnInit {
     return this.map;
   }
 
+  // conversion of map into array
   public convert(original) {
     let multiArray = [];
     let date = this.prevDate;
